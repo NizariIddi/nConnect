@@ -29,7 +29,7 @@ export default function Contacts() {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/users");
+      const res = await axios.get("https://4c6d5352154b.ngrok-free.app/users");
       const allUsers = res.data.users?.filter(u => u.id !== loggedUser.id) || [];
       setUsers(allUsers);
     } catch (err) {
@@ -40,7 +40,7 @@ export default function Contacts() {
 
   const fetchFriends = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/friends/${loggedUser.id}`);
+      const res = await axios.get(`https://4c6d5352154b.ngrok-free.app/friends/${loggedUser.id}`);
       setFriends(res.data.friends || []);
     } catch (err) {
       console.log(err);
@@ -51,7 +51,7 @@ export default function Contacts() {
   // ---------------- ADD FRIEND ----------------
   const addFriend = async (friendId) => {
     try {
-      await axios.post("http://localhost:5000/add-friend", {
+      await axios.post("https://4c6d5352154b.ngrok-free.app/add-friend", {
         userId: loggedUser.id,
         friendId,
       });
@@ -93,7 +93,7 @@ export default function Contacts() {
       if (profile.profileImageFile) formData.append("profileImage", profile.profileImageFile);
       if (profile.coverImageFile) formData.append("coverImage", profile.coverImageFile);
 
-      const res = await axios.post("http://localhost:5000/update-profile", formData, {
+      const res = await axios.post("https://4c6d5352154b.ngrok-free.app/update-profile", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       });
 
@@ -118,7 +118,7 @@ export default function Contacts() {
           <img
             src={
               loggedUser.profileImage
-                ? `http://localhost:5000/uploads/${loggedUser.profileImage}`
+                ? `https://4c6d5352154b.ngrok-free.app/uploads/${loggedUser.profileImage}`
                 : "https://via.placeholder.com/32"
             }
             alt="Profile"
@@ -158,7 +158,7 @@ export default function Contacts() {
                   <img
                     src={
                       f.profileImage
-                        ? `http://localhost:5000/uploads/${f.profileImage}`
+                        ? `https://4c6d5352154b.ngrok-free.app/uploads/${f.profileImage}`
                         : "https://via.placeholder.com/40"
                     }
                     alt="profile"
@@ -192,7 +192,7 @@ export default function Contacts() {
                   <img
                     src={
                       u.profileImage
-                        ? `http://localhost:5000/uploads/${u.profileImage}`
+                        ? `https://4c6d5352154b.ngrok-free.app/uploads/${u.profileImage}`
                         : "https://via.placeholder.com/40"
                     }
                     alt="profile"
@@ -220,7 +220,7 @@ export default function Contacts() {
             <div className="w-full h-40 bg-gray-700 rounded-lg overflow-hidden">
               {(previewCover || profile.coverImage) ? (
                 <img
-                  src={previewCover || `http://localhost:5000/uploads/${profile.coverImage}`}
+                  src={previewCover || `https://4c6d5352154b.ngrok-free.app/uploads/${profile.coverImage}`}
                   className="w-full h-full object-cover"
                 />
               ) : (
@@ -234,7 +234,7 @@ export default function Contacts() {
               <div className="w-32 h-32 rounded-full bg-gray-700 overflow-hidden border-4 border-gray-900 shadow-lg">
                 {(previewProfile || profile.profileImage) ? (
                   <img
-                    src={previewProfile || `http://localhost:5000/uploads/${profile.profileImage}`}
+                    src={previewProfile || `https://4c6d5352154b.ngrok-free.app/uploads/${profile.profileImage}`}
                     className="w-full h-full object-cover"
                   />
                 ) : (

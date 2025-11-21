@@ -3,7 +3,7 @@ import axios from "axios";
 import io from "socket.io-client";
 import { PaperAirplaneIcon, PaperClipIcon, MicrophoneIcon, StopIcon, XMarkIcon, Bars3Icon, MagnifyingGlassIcon, EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("https://4c6d5352154b.ngrok-free.app");
 
 export default function Chat() {
   const loggedUser = JSON.parse(localStorage.getItem("user") || '{"id": 1, "username": "Demo User"}');
@@ -50,7 +50,7 @@ export default function Chat() {
   // Fetch friends
   useEffect(() => {
     setLoading(true);
-    axios.get(`http://localhost:5000/friends/${loggedUser.id}`)
+    axios.get(`https://4c6d5352154b.ngrok-free.app/friends/${loggedUser.id}`)
       .then(res => {
         setFriends(res.data.friends || []);
         setFilteredFriends(res.data.friends || []);
@@ -80,7 +80,7 @@ export default function Chat() {
     setUnreadCounts(prev => ({ ...prev, [activeFriend.id]: 0 }));
     setLoading(true);
 
-    axios.get(`http://localhost:5000/messages/${loggedUser.id}/${activeFriend.id}`)
+    axios.get(`https://4c6d5352154b.ngrok-free.app/messages/${loggedUser.id}/${activeFriend.id}`)
       .then(res => {
         setChat(res.data.messages || []);
         setError("");
@@ -167,7 +167,7 @@ function isLink(text) {
     
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/upload", formData, {
+      const res = await axios.post("https://4c6d5352154b.ngrok-free.app/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       });
       setChat(prev => [...prev, res.data.msgData]);
@@ -207,7 +207,7 @@ function isLink(text) {
 
         setLoading(true);
         try {
-          const res = await axios.post("http://localhost:5000/upload", formData, {
+          const res = await axios.post("https://4c6d5352154b.ngrok-free.app/upload", formData, {
             headers: { "Content-Type": "multipart/form-data" }
           });
           setChat(prev => [...prev, res.data.msgData]);
@@ -264,7 +264,7 @@ function isLink(text) {
               <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg overflow-hidden">
                 {loggedUser.profileImage ? (
                   <img
-                    src={`http://localhost:5000/uploads/${loggedUser.profileImage}`}
+                    src={`https://4c6d5352154b.ngrok-free.app/uploads/${loggedUser.profileImage}`}
                     alt="Profile"
                     onError={(e) => {
                       e.target.style.display = "none"; // hide broken image
@@ -415,7 +415,7 @@ function isLink(text) {
                           {/* Sender avatar (only on received messages) */}
                           {msg.sender_id !== loggedUser.id && (
                             <img
-                              src={msg.sender_profile_image ? `http://localhost:5000/uploads/${msg.sender_profile_image}` : "https://via.placeholder.com/32"}
+                              src={msg.sender_profile_image ? `https://4c6d5352154b.ngrok-free.app/uploads/${msg.sender_profile_image}` : "https://via.placeholder.com/32"}
                               alt={msg.sender_username}
                               className="w-8 h-8 rounded-full object-cover mr-2"
                             />
@@ -444,7 +444,7 @@ function isLink(text) {
                           {/* Sender avatar (only on sent messages) */}
                           {msg.sender_id === loggedUser.id && (
                             <img
-                              src={loggedUser.profileImage ? `http://localhost:5000/uploads/${loggedUser.profileImage}` : "https://via.placeholder.com/32"}
+                              src={loggedUser.profileImage ? `https://4c6d5352154b.ngrok-free.app/uploads/${loggedUser.profileImage}` : "https://via.placeholder.com/32"}
                               alt="Me"
                               className="w-8 h-8 rounded-full object-cover ml-2"
                             />
@@ -458,7 +458,7 @@ function isLink(text) {
                           {/* IMAGE FILES */}
                           {msg.file_type?.startsWith("image/") && (
                             <img
-                              src={`http://localhost:5000${msg.file_path}`}
+                              src={`https://4c6d5352154b.ngrok-free.app${msg.file_path}`}
                               alt="Shared"
                               className="max-w-xs max-h-64 rounded-2xl object-cover"
                               onError={(e) => { e.target.style.display = "none"; }} // hide if broken
@@ -467,7 +467,7 @@ function isLink(text) {
 
                           {/* AUDIO FILES */}
                           {msg.file_type?.startsWith("audio/") && (
-                            <audio controls src={`http://localhost:5000${msg.file_path}`} className="w-64" />
+                            <audio controls src={`https://4c6d5352154b.ngrok-free.app${msg.file_path}`} className="w-64" />
                           )}
 
                           {/* OTHER FILES */}
@@ -475,7 +475,7 @@ function isLink(text) {
                             !msg.file_type.startsWith("image/") &&
                             !msg.file_type.startsWith("audio/") && (
                               <a
-                                href={`http://localhost:5000${msg.file_path}`}
+                                href={`https://4c6d5352154b.ngrok-free.app${msg.file_path}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center px-4 py-2 bg-[#252836] rounded-xl text-purple-400 hover:text-purple-300 transition-colors mt-1"
@@ -574,7 +574,7 @@ function isLink(text) {
 <div className="flex flex-col items-center mb-8 flex items-center justify-center mb-4 shadow-lg overflow-hidden relative"
 style={{
       backgroundImage: activeFriend?.coverImage
-        ? `url(http://localhost:5000/uploads/${activeFriend.coverImage})`
+        ? `url(https://4c6d5352154b.ngrok-free.app/uploads/${activeFriend.coverImage})`
         : "linear-gradient(to bottom right, #7f00ff, #e100ff)", // fallback gradient
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -585,7 +585,7 @@ style={{
   >
     {activeFriend?.profileImage ? (
       <img
-        src={`http://localhost:5000/uploads/${activeFriend.profileImage}`}
+        src={`https://4c6d5352154b.ngrok-free.app/uploads/${activeFriend.profileImage}`}
         alt={activeFriend.username || "User"}
         onError={(e) => {
           e.target.style.display = "none"; // hide broken image
@@ -629,11 +629,11 @@ style={{
                   key={i} 
                   className="flex items-center space-x-3 p-2 rounded-lg hover:bg-opacity-80 transition-all cursor-pointer group"
                   style={{ backgroundColor: '#1a1d29' }}
-                  onClick={() => window.open(`http://localhost:5000${msg.file_path}`, '_blank')}
+                  onClick={() => window.open(`https://4c6d5352154b.ngrok-free.app${msg.file_path}`, '_blank')}
                 >
                   <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 ring-2 ring-gray-700 group-hover:ring-purple-500 transition-all">
                     <img 
-                      src={`http://localhost:5000${msg.file_path}`} 
+                      src={`https://4c6d5352154b.ngrok-free.app${msg.file_path}`} 
                       alt="Shared file" 
                       className="w-full h-full object-cover"
                     />

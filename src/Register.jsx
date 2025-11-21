@@ -8,7 +8,7 @@ export default function Register() {
 
   const handleRegister = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/register", {
+      const res = await axios.post("https://4c6d5352154b.ngrok-free.app/register", {
         username,
         email,
         password
